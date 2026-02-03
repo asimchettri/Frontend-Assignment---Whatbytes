@@ -7,8 +7,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Filters Section */}
           <div>
-            <h3 className="font-semibold text-lg mb-3">Filters</h3>
-            <ul className="space-y-2 text-sm text-gray-200">
+            <h3 className="font-semibold text-lg mb-3 ">Filters</h3>
+            <ul className="space-y-2 text-sm text-gray-200 ml-3">
               <li>All</li>
               <li>Electronics</li>
             </ul>
@@ -17,7 +17,7 @@ export default function Footer() {
           {/* About Us Section */}
           <div>
             <h3 className="font-semibold text-lg mb-3">About Us</h3>
-            <ul className="space-y-2 text-sm text-gray-200">
+            <ul className="space-y-2 text-sm text-gray-200 ml-3">
               <li>About Us</li>
               <li>Contact</li>
             </ul>

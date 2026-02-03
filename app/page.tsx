@@ -1,41 +1,55 @@
-export default function Home() {
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import { products } from '@/lib/data';
+import Sidebar from '@/components/Sidebar';
+import ProductGrid from '@/components/ProductGrid';
+import { Suspense } from 'react';
+
+function HomeContent() {
+  const searchParams = useSearchParams();
+  
+  // Get filter parameters
+  const searchQuery = searchParams.get('search') || '';
+  const category = searchParams.get('category') || 'All';
+  const brand = searchParams.get('brand') || 'All';
+  const minPrice = parseInt(searchParams.get('minPrice') || '0');
+  const maxPrice = parseInt(searchParams.get('maxPrice') || '1000');
+
+  // Filter products
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = category === 'All' || product.category === category;
+    const matchesBrand = brand === 'All' || product.brand === brand;
+    const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+
+    return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
+  });
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center">
-        <h1 className="text-4xl font-display font-bold text-gray-900 mb-4">
-          Welcome to Our Store
-        </h1>
-        <p className="text-lg text-gray-600 mb-8">
-          Discover amazing products at great prices
-        </p>
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-8 max-w-2xl mx-auto">
-          <h2 className="text-2xl font-semibold mb-2">✅ Header Component Ready!</h2>
-          <p className="text-blue-100">
-            The header includes a logo, search bar, and cart icon with badge.
-            Try searching for products or checking out the cart.
-          </p>
+    
+     
+      <div className=" container mt-4 ml-2 mr-2 flex flex-col lg:flex-row gap-6 lg:gap-8">
+        {/* Sidebar - Full width on mobile, fixed width on desktop */}
+        <div className="w-full lg:w-auto">
+          <Sidebar />
         </div>
-        
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-            <div className="text-3xl mb-3">🔍</div>
-            <h3 className="font-semibold text-lg mb-2">Search Products</h3>
-            <p className="text-gray-600 text-sm">Use the search bar to find products quickly</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-            <div className="text-3xl mb-3">🛒</div>
-            <h3 className="font-semibold text-lg mb-2">Shopping Cart</h3>
-            <p className="text-gray-600 text-sm">Cart icon shows the number of items added</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-            <div className="text-3xl mb-3">👤</div>
-            <h3 className="font-semibold text-lg mb-2">User Profile</h3>
-            <p className="text-gray-600 text-sm">Access your account and preferences</p>
-          </div>
+
+        {/* Product Grid - Takes remaining space */}
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl lg:text-3xl font-display font-bold mb-6 lg:mb-8 ml-2">Product Listing</h1>
+          <ProductGrid products={filteredProducts} />
         </div>
       </div>
-    </div>
+    
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-4 py-8">Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
