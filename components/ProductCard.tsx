@@ -4,6 +4,7 @@ import { Product } from '@/lib/data';
 import { useCartStore } from '@/lib/store';
 import { Star } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface ProductCardProps {
   product: Product;
@@ -13,7 +14,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state: any) => state.addItem);
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e:React.MouseEvent) => {
+    e.preventDefault();
     setIsAdding(true);
     addItem(product);
     setTimeout(() => setIsAdding(false), 500);
@@ -33,6 +35,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
+    <Link href={`/product/${product.id}`} className='block'>
     <div className="bg-white rounded-lg shadow-md overflow-hidden product-card group">
       {/* Product Image */}
       <div className="relative h-48 overflow-hidden bg-gray-100">
@@ -61,7 +64,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <button
           onClick={handleAddToCart}
           disabled={isAdding}
-          className={`w-full py-2 rounded-lg font-semibold transition-colors ${
+          className={`w-full py-2 rounded-lg border-none font-semibold transition-colors ${
             isAdding
               ? 'bg-green-500 text-white'
               : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -71,5 +74,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         </button>
       </div>
     </div>
+    </Link>
   );
 }

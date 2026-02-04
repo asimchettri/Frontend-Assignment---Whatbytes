@@ -15,7 +15,7 @@ export const products: Product[] = [
     id: '1',
     title: 'Running Shoes',
     price: 99,
-    category: 'Electronics',
+    category:'Fashion',
     brand: 'Nike',
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
     description: 'Professional running shoes with advanced cushioning technology for maximum comfort and performance.',

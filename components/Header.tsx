@@ -14,6 +14,11 @@ export default function Header() {
   const totalItems = useCartStore((state: any) => state.getTotalItems());
   const searchRef = useRef<HTMLDivElement>(null);
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Filter products based on search
   const searchResults = searchQuery.trim()
     ? products.filter(
@@ -98,24 +103,34 @@ export default function Header() {
             </form>
           </div>
 
-          {/* Cart and Profile */}
-          <Link
-            href="/cart"
-            className="flex items-center gap-3 bg-[#0b1e44] px-3 py-2 rounded-md hover:opacity-80 transition-opacity"
-          >
-            {/* Cart Icon with Badge */}
-            <div className="relative">
-              <ShoppingCart className="w-6 h-6 text-white" />
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                  {totalItems}
-                </span>
-              )}
-            </div>
+          <div className="flex item gap-2">
+            {/* Cart and Profile */}
+            <Link
+              href="/cart"
+              className="flex items-center gap-3 bg-[#0b1e44] px-3 py-2 rounded-md hover:opacity-80 transition-opacity"
+            >
+              {/* Cart Icon with Badge */}
+              <div className="relative">
+                <ShoppingCart className="w-6 h-6 text-white" />
+                {mounted && totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
+                    {totalItems}
+                  </span>
+                )}
+              </div>
 
-            {/* Cart Text */}
-            <span className="text-stone-50 font-semibold">Cart</span>
-          </Link>
+              {/* Cart Text */}
+              <span className="text-stone-50 font-semibold">Cart</span>
+            </Link>
+
+            {/* avatar icon */}
+            <Link
+              href="/profile"
+              className="w-10 h-10 rounded-full bg-[#0b1e44] flex items-center justify-center hover:opacity-80 transition"
+            >
+              <User className="w-5 h-5 text-white" />
+            </Link>
+          </div>
         </div>
       </div>
     </header>
