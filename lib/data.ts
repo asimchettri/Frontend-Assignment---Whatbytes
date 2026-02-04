@@ -36,7 +36,7 @@ export const products: Product[] = [
   {
     id: '3',
     title: 'Backpack',
-    brand: 'North Face',
+    brand: 'Ray-Ban',
     price: 129,
     category: 'Home',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500',
