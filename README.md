@@ -31,7 +31,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-[Live Demo](frontendassignment-whatbytes.vercel.app)
+[Live Demo](https://frontendassignment-whatbytes.vercel.app)
+
 
 
 
